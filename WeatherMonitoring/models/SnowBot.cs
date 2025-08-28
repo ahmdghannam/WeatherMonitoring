@@ -16,7 +16,7 @@ public class SnowBot : WeatherBot
     public SnowBot(double temperatureThreshold, string message)
     {
         this.TemperatureThreshold = temperatureThreshold;
-        this.Message = message;
+        this.Message = message.Trim();
     }
 
     protected override void ReactToStateChange()
