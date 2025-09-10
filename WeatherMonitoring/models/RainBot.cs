@@ -17,7 +17,7 @@ public class RainBot : WeatherBot
 
     protected override void ReactToStateChange()
     {
-        if (state.Temperature > HumidityThreshold)
+        if (state.Humidity > HumidityThreshold)
         {
             EnableBot();
             Console.WriteLine(Message);
