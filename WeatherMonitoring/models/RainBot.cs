@@ -1,21 +1,23 @@
+using System.Text.Json.Serialization;
+
 namespace WeatherMonitoring.models;
 
 public class RainBot : WeatherBot
 {
-    protected override string BotName { get; set; } = "RainBot";
-    protected sealed override string Message { get; set; } 
-    private readonly double _humidityThreshold;
-
-    RainBot(double humidityThreshold, string message)
+    public override string BotName => "RainBot";
+    [JsonPropertyName("humidityThreshold")]
+    public double HumidityThreshold { get; set; }
+    public RainBot() { }
+    public RainBot(double humidityThreshold, string message)
     {
-        this._humidityThreshold = humidityThreshold;
+        this.HumidityThreshold = humidityThreshold;
         this.Message = message;
     }
-    
 
-    public override void ReactToStateChange()
+
+    protected override void ReactToStateChange()
     {
-        if (state.Temperature > _humidityThreshold)
+        if (state.Temperature > HumidityThreshold)
         {
             EnableBot();
             Console.WriteLine(Message);
@@ -24,5 +26,10 @@ public class RainBot : WeatherBot
         {
             DisableBot();
         }
+    }
+
+    public override string ToString()
+    {
+        return $"name {BotName} message {Message}  threshold {HumidityThreshold}";
     }
 }

@@ -1,20 +1,27 @@
+using System.Text.Json.Serialization;
+
 namespace WeatherMonitoring.models;
 
 public class SnowBot : WeatherBot
 {
-    protected override string BotName { get; set; } = "SnowBot";
-    protected sealed override string Message { get; set; }
-    private readonly double _temperatureThreshold;
+    public override string BotName => "SnowBot";
 
-    SnowBot(double temperatureThreshold, string message)
+    [JsonPropertyName("temperatureThreshold")]
+    public double TemperatureThreshold { get; set; }
+
+    public SnowBot()
     {
-        this._temperatureThreshold = temperatureThreshold;
+    }
+
+    public SnowBot(double temperatureThreshold, string message)
+    {
+        this.TemperatureThreshold = temperatureThreshold;
         this.Message = message;
     }
 
-    public override void ReactToStateChange()
+    protected override void ReactToStateChange()
     {
-        if (state.Temperature < _temperatureThreshold)
+        if (state.Temperature < TemperatureThreshold)
         {
             EnableBot();
             Console.WriteLine(Message);
@@ -23,5 +30,10 @@ public class SnowBot : WeatherBot
         {
             DisableBot();
         }
+    }
+
+    public override string ToString()
+    {
+        return $"name {BotName} message {Message}  threshold {TemperatureThreshold}";
     }
 }

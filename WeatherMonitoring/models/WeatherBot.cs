@@ -1,30 +1,36 @@
+using System.Text.Json.Serialization;
+
 namespace WeatherMonitoring.models;
 
 public abstract class WeatherBot
 {
-    protected WeatherState state = new WeatherState();
-    private bool isEnabled = false;
-    protected abstract string BotName { get; set; }
-    protected abstract string Message { get; set; }
 
+
+    protected WeatherState state = new WeatherState();
+    public bool _isEnabled { get; private set; }
+    public abstract string BotName { get; }
+    
+    [JsonPropertyName("message")]
+    public string Message { get; set; } = string.Empty;
+    
     protected void EnableBot()
     {
-        if (!isEnabled)
+        if (!_isEnabled)
         {
             Console.WriteLine($" {BotName} is enabled");
         }
 
-        isEnabled = true;
+        _isEnabled = true;
     }
 
     protected void DisableBot()
     {
-        if (isEnabled)
+        if (_isEnabled)
         {
             Console.WriteLine($" {BotName} is disabled");
         }
 
-        isEnabled = false;
+        _isEnabled = false;
     }
 
     public void UpdateState(WeatherState newState)
@@ -33,5 +39,10 @@ public abstract class WeatherBot
         ReactToStateChange();
     }
 
-    public abstract void ReactToStateChange();
+    protected abstract void ReactToStateChange();
+
+    public override string ToString()
+    {
+        return $"name {BotName} message {Message} isEnabled {_isEnabled} ";
+    }
 }
