@@ -6,7 +6,7 @@ public class WeatherStateProvider
 {
     private readonly WeatherState _currentState = new();
 
-    private readonly List<WeatherBot> _subscribers = [];
+    private readonly List<WeatherBot> _subscribers = new List<WeatherBot>();
 
     public void AddSubscriber(WeatherBot bot)
     {
