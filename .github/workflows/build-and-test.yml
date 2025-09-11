@@ -8,24 +8,22 @@ on:
       - '**.cs'
       - '**.csproj'
 
-env:
-  DOTNET_VERSION: '6.0.0' # The .NET SDK version to use
-
 jobs:
   build-and-test:
-
-    name: build-and-test-${{matrix.os}}
     runs-on: ${{ matrix.os }}
     strategy:
+      fail-fast: false
       matrix:
         os: [ubuntu-latest, windows-latest, macOS-latest]
 
     steps:
       - uses: actions/checkout@v3
-      - name: Setup .NET Core
+
+      - name: Setup .NET
         uses: actions/setup-dotnet@v3
         with:
-          dotnet-version: ${{ env.DOTNET_VERSION }}
+          dotnet-version: '6.0.x' # Use x to match latest patch of 6.0
+          include-prerelease: false
 
       - name: Install dependencies
         run: dotnet restore
