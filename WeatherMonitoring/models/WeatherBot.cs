@@ -33,7 +33,7 @@ public abstract class WeatherBot
         _isEnabled = false;
     }
 
-    public void UpdateState(WeatherState newState)
+    public  virtual void UpdateState(WeatherState newState)
     {
         state.UpdateState(newState.Location, newState.Temperature, newState.Humidity);
         ReactToStateChange();
