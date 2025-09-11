@@ -13,9 +13,9 @@ public class WeatherStateProvider
         _subscribers.Add(bot);
     }
 
-    public void UpdateState(double location, double temperature, double humidity)
+    public void UpdateState(WeatherState state)
     {
-        _currentState.UpdateState(location, temperature, humidity);
+        _currentState.UpdateState(state.Location, state.Temperature, state.Humidity);
         NotifySubscribers();
     }
 
